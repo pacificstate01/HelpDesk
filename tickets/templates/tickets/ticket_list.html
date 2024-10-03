@@ -1,0 +1,43 @@
+{% extends 'tickets/base.html' %}
+{% load static %}
+{%block content%}
+
+<h2>ticket list</h2>
+<div class="d-flex flex-row-reverse">
+    <a class="btn btn-info me-2" href="{%url 'ticket_create'%}"><i class="bi bi-ticket-perforated-fill"></i>
+        Ticket create</a> 
+</div>
+<table class="table table-striped">
+    {%if tickets%}
+    <thead>
+        <tr>
+            <td>Titulo</td>
+            <td>Descripcion</td>
+            <td>Creado</td>
+            <td>Actualizado</td>
+        </tr>
+    </thead>
+    <tbody>
+        {%for t in tickets%}
+
+        <tr>
+            <td>{{t.title}}</td>
+            <td>{{t.description}}</td>
+            <td>{{t.created_at}}</td>
+            <td>{{t.updated_at}}</td>
+            <td>
+                <a class="btn btn-info me-2" href="{% url 'ticket_detail' t.pk %}">
+                    <i class="bi bi-ticket-perforated-fill"></i> Ticket Detail
+                </a>
+                <a class="btn btn-info me-2" href="{% url 'ticket_update' t.pk %}">
+                    <i class="bi bi-ticket-perforated-fill"></i> Ticket Update
+                </a>
+                <a class="btn btn-danger me-2" href="{% url 'ticket_delete' t.pk %}">
+                    <i class="bi bi-ticket-perforated-fill"></i> Ticket Delete
+                </a>
+            </td>
+        </tr>
+        {%endfor%}
+    {%endif%}
+</table>
+{%endblock%}
