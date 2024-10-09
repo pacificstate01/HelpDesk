@@ -3,12 +3,31 @@
 
 {%block content %}
 
-<form method="post">
+<form id="ticket-form" method="post">
     {%csrf_token %}
     {{form.as_p}}
     <button class="btn btn-success" type="submit">Save</button>
 </form>
-
-
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+    document.getElementById("ticket-form").addEventListener("submit", function(event){
+        event.preventDefault();
+        $.ajax({
+            url: "{%url 'ticket_create' %}",
+            type: "post",
+            data: $(this).serialize(),
+            success: function(data){
+                Swal.fire({
+                    title: "Ticket creado exitosamente",
+                    icon: "success"
+                }).then(function(){
+                    window.location.href="{%url 'ticket_list'%}";
+                });
+            },
+            error: function(data){
+            }
+        });       
+    });
+</script>
 {%endblock%}

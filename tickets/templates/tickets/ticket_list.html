@@ -1,20 +1,20 @@
 {% extends 'tickets/base.html' %}
-{% load static %}
+<!-- {% load static %} -->
 {%block content%}
-
+<link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css"> 
 <h2>ticket list</h2>
 <div class="d-flex flex-row-reverse">
     <a class="btn btn-info me-2" href="{%url 'ticket_create'%}"><i class="bi bi-ticket-perforated-fill"></i>
         Ticket create</a> 
 </div>
-<table class="table table-striped">
+<table id="ticket-table" class="table table-striped">
     {%if tickets%}
     <thead>
         <tr>
-            <td>Titulo</td>
-            <td>Descripcion</td>
-            <td>Creado</td>
-            <td>Actualizado</td>
+            <th>Titulo</th>
+            <th>Descripcion</th>
+            <th>Creado</th>
+            <th>Actualizado</th>
         </tr>
     </thead>
     <tbody>
@@ -40,4 +40,11 @@
         {%endfor%}
     {%endif%}
 </table>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#ticket-table').DataTable();
+    });
+</script>
 {%endblock%}
