@@ -1,5 +1,5 @@
 from django.views.generic import ListView,DetailView,CreateView, UpdateView, DeleteView,TemplateView
-from .models import Ticket
+from .models import Ticket,Tech
 from .forms import TicketForm
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator

@@ -27,7 +27,7 @@ class SignUpView(CreateView):
 class ProfileUpdate(UpdateView):
     form_class = TechForm
     success_url = reverse_lazy('profile')
-    template_name= 'resgistration/Profile_form.html'
+    template_name= 'registration/Profile_form.html'
     
     def get_object(self):
         profile,created = Tech.objects.get_or_create(user = self.request.user)
