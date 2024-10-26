@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ticket,Tech
+from .models import Ticket,Tech,History
 
 
 class TicketForm(forms.ModelForm):
@@ -19,4 +19,12 @@ class TechForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'avatar':forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
+
+class HistoryForm(forms.ModelForm):
+    class Meta:
+        model = History
+        fields = ['description']
+        widgets = {
+            'description': forms.Textarea(attrs={'class': 'form-control'})
         }
