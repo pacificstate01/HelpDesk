@@ -3,37 +3,46 @@
 
 
 {%block content%}
-
 <h2>My profile</h2>
 <div class="row mt-3 col-md-6">
-    <form id="profile-form" method="post">
+    <form id="profile-form" method="post" enctype = "multipart/form-data">
         {%csrf_token%}
         {{form.as_p}}
         <input type="submit" class="btn btn-warning" value="Update" />
         <a href="{%url 'ticket_list'%}" class="btn btn-dark">Back</a>
-
     </form>
+    {% if request.user.tech.avatar %}
+    <img src="{{ request.user.tech.avatar.url }}" class="card-img-top" alt="...">
+    {%else%}
+    {%load static%}
+    <img src="{%static 'tickets/img/profile.webp'%}" class="card-img-top" alt="...">
+    {%endif%}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
-        document.getElementById("profile-form").addEventListener("submit", function(event){
-            event.preventDefault();
-            $.ajax({
-                url: "{%url 'profile' %}",
-                type: "post",
-                data: $(this).serialize(),
-                success: function(data){
-                    Swal.fire({
-                        title: "Perfil actualizado correctamente",
-                        icon: "success"
-                    }).then(function(){
-                        window.location.href="{%url 'home'%}";
-                    });
-                },
-                error: function(data){
-                }
-            });       
+       document.getElementById("profile-form").addEventListener("submit", function(event){
+        event.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url: "{% url 'profile' %}",
+            type: "post",
+            data: formData,
+            processData: false,   
+            contentType: false,   
+            success: function(data){
+                Swal.fire({
+                    title: "Perfil actualizado correctamente",
+                    icon: "success"
+                }).then(function(){
+                    window.location.href = "{% url 'profile' %}";
+                });
+            },
+            error: function(data){
+                console.log("Error:", data);
+            }
         });
+    });
+
     </script>
 
 </div>
